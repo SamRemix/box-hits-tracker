@@ -155,7 +155,6 @@ weapon_average(weapon) {
 box_hits_tracker_hud() {
   level.box_hits_tracker = createServerFontString("big", 1.5);
   level.box_hits_tracker setPoint("TOPRIGHT", "TOPRIGHT", 58, 30);
-  // level.box_hits_tracker.alpha = 0;
 
   level.box_hits = 0;
 
@@ -177,13 +176,11 @@ box_hits_tracker_hud() {
 }
 
 rayguns_average_hud() {
-  level.rayguns_average = createServerFontString("big", 1.2);
+  level.rayguns_average = createServerFontString("big", 1.1);
   level.rayguns_average setPoint("TOPRIGHT", "TOPRIGHT", 58, 48);
-  // level.rayguns_average.alpha = 0;
   
-  level.rayguns_mark2_average = createServerFontString("big", 1.2);
+  level.rayguns_mark2_average = createServerFontString("big", 1.1);
   level.rayguns_mark2_average setPoint("TOPRIGHT", "TOPRIGHT", 58, 62);
-  // level.rayguns_mark2_average.alpha = 0;
 
   level.rayguns = 0;
   level.rayguns_mark2 = 0;
@@ -198,8 +195,8 @@ rayguns_average_hud() {
       wait .05;
     }
 
-    level.rayguns_average.label = &"Rayguns avg: ";
-    level.rayguns_mark2_average.label = &"Mark 2 avg: ";
+    level.rayguns_average.label = &"Ray Guns average: ";
+    level.rayguns_mark2_average.label = &"Ray Guns Mark II average: ";
 
     level.rayguns_average setValue(weapon_average(level.rayguns));
     level.rayguns_mark2_average setValue(weapon_average(level.rayguns_mark2));

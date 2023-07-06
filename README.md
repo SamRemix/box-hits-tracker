@@ -1,6 +1,8 @@
-# T6 Box Hits/Average Tracker
+# T6 Box hits/average tracker
 
-Box hits tracker for Call of Duty: Black Ops II *(enabled on survival maps only)*
+Box hits tracker for Call of Duty: Black Ops II.
+
+> *Enabled on survival maps only (Depot, Town, Farm & Nuketown).*
 
 ## Installation
 
@@ -15,11 +17,12 @@ Download `box_hits_tracker_compiled.gsc` and put it in `Plutonium\storage\t6\scr
 ## Features
 
 - Box hits tracker
-- Rayguns average
+- Ray Guns average
+  - *Ray Guns & Ray Guns Mark II*
 
 ### Dvars
 
 | HUD element      | Dvar               | Default |
 | :--------------- | :----------------- | :------ |
 | Box hits tracker | `box_hits` + `0 1` | Enabled |
-| Rayguns average  | `average` + `0 1`  | Enabled |
+| Ray Guns average | `average` + `0 1`  | Enabled |
