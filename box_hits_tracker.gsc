@@ -98,45 +98,35 @@ is_survival_map() {
 
 get_box_hit() {
   while (1) {
-    while (self.zbarrier getzbarrierpiecestate(2) != "opening") {
-      wait .05;
-    }
+    self waittill("trigger");
 
     level.box_hits++;
 
-    while (self.zbarrier getzbarrierpiecestate(2) == "opening") {
-      wait .05;
-    }
+    self waittill("chest_accessed");
   }
 }
 
-is_raygun() {
+check_rayguns() {
   while (1) {
-    while (self.zbarrier.weapon_string != "ray_gun_zm") {
+    while (self.zbarrier.weapon_string != "ray_gun_zm" && self.zbarrier.weapon_string != "raygun_mark2_zm") {
       wait .05;
     }
+
+    grabbed_weapon = self.zbarrier.weapon_string;
 
     self waittill("user_grabbed_weapon");
 
-    level.rayguns++;
+    switch (grabbed_weapon) {
+    case "ray_gun_zm":
+      level.rayguns++;
+      break;
 
-    while (self.zbarrier.weapon_string == "ray_gun_zm") {
-      wait .05;
-    }
-  }
-}
-
-is_raygun_mark2() {
-  while (1) {
-    while (self.zbarrier.weapon_string != "raygun_mark2_zm") {
-      wait .05;
+    case "raygun_mark2_zm":
+      level.rayguns_mark2++;
+      break;
     }
 
-    self waittill("user_grabbed_weapon");
-    
-    level.rayguns_mark2++;
-
-    while (self.zbarrier.weapon_string == "raygun_mark2_zm") {
+    while (self.zbarrier.weapon_string == "ray_gun_zm" || self.zbarrier.weapon_string == "raygun_mark2_zm") {
       wait .05;
     }
   }
@@ -176,18 +166,17 @@ box_hits_tracker_hud() {
 }
 
 rayguns_average_hud() {
-  level.rayguns_average = createServerFontString("big", 1.1);
+  level.rayguns_average = createServerFontString("small", 1.1);
   level.rayguns_average setPoint("TOPRIGHT", "TOPRIGHT", 58, 48);
   
-  level.rayguns_mark2_average = createServerFontString("big", 1.1);
-  level.rayguns_mark2_average setPoint("TOPRIGHT", "TOPRIGHT", 58, 62);
+  level.rayguns_mark2_average = createServerFontString("small", 1.1);
+  level.rayguns_mark2_average setPoint("TOPRIGHT", "TOPRIGHT", 58, 60);
 
   level.rayguns = 0;
   level.rayguns_mark2 = 0;
 
   foreach(chest in level.chests) {
-    chest thread is_raygun();
-    chest thread is_raygun_mark2();
+    chest thread check_rayguns();
   }
 
   while (1) {
@@ -195,8 +184,8 @@ rayguns_average_hud() {
       wait .05;
     }
 
-    level.rayguns_average.label = &"Ray Guns average: ";
-    level.rayguns_mark2_average.label = &"Ray Guns Mark II average: ";
+    level.rayguns_average.label = &"Ray Gun average: ";
+    level.rayguns_mark2_average.label = &"Ray Gun Mark II average: ";
 
     level.rayguns_average setValue(weapon_average(level.rayguns));
     level.rayguns_mark2_average setValue(weapon_average(level.rayguns_mark2));
