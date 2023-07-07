@@ -1,6 +1,6 @@
 # T6 Box hits/average tracker
 
-Box hits tracker for Call of Duty: Black Ops II.
+Box hits tracker & average calculator for Call of Duty: Black Ops II.
 
 > *Enabled on survival maps only (Depot, Town, Farm & Nuketown).*
 
@@ -8,11 +8,11 @@ Box hits tracker for Call of Duty: Black Ops II.
 
 ### Redacted
 
-Download `box_hits_tracker.gsc` and put it in `Redacted_LAN\data\scripts` folder.
+Download [box_hits_tracker.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker.gsc) and put it in `Redacted_LAN\data\scripts` folder.
 
 ### Plutonium
 
-Download `box_hits_tracker_compiled.gsc` and put it in `Plutonium\storage\t6\scripts\zm` folder.
+Download [box_hits_tracker_compiled.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker_compiled.gsc) and put it in `Plutonium\storage\t6\scripts\zm` folder.
 
 ## Features
 
