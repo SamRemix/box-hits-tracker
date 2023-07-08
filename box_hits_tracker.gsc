@@ -89,7 +89,7 @@ dvars_controller() {
 */
 
 is_survival_map() {
-  if (level.scr_zm_ui_gametype_group == "zsurvival" || level.script == "zm_nuked") {
+  if (level.scr_zm_ui_gametype_group == "zsurvival") {
     return true;
   }
 
