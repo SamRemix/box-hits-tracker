@@ -16,9 +16,8 @@ Download [box_hits_tracker_compiled.gsc](https://github.com/SamRemix/box-hits-tr
 
 ## Features
 
-- Box hits tracker
-- Ray Guns average
-  - *Ray Guns & Ray Guns Mark II*
+- Box hits tracker *(appears on first hit)*
+- Ray Guns average *(appears after first trade)*
 
 ### Dvars
 
