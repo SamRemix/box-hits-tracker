@@ -3,12 +3,14 @@
 #include common_scripts\utility;
 
 init() {
-  level thread onplayerconnect();
+  thread onplayerconnect();
 }
 
 onplayerconnect() {
-  level waittill("connecting", player);
-  player thread onplayerspawned();
+  while (1) {
+    level waittill("connecting", player);
+    player thread onplayerspawned();
+  }
 }
 
 onplayerspawned() {
@@ -29,6 +31,11 @@ onplayerspawned() {
     flag_wait("initial_blackscreen_passed");
 
     if (is_survival_map()) {
+      // I don't know why but "wait" is needed otherwise it doesn't work on Nuketown
+      if (is_nuketown()) {
+        wait .05;
+      }
+
       self thread box_hits_tracker_hud();
       self thread rayguns_average_hud();
     }
@@ -89,7 +96,15 @@ dvars_controller() {
 */
 
 is_survival_map() {
-  if (level.scr_zm_ui_gametype_group == "zsurvival") {
+  if (level.scr_zm_ui_gametype_group == "zsurvival" || level.script == "zm_nuked") {
+    return true;
+  }
+
+  return false;
+}
+
+is_nuketown() {
+  if (level.script == "zm_nuked") {
     return true;
   }
 
@@ -117,13 +132,13 @@ check_rayguns() {
     self waittill("user_grabbed_weapon");
 
     switch (grabbed_weapon) {
-    case "ray_gun_zm":
-      level.rayguns++;
-      break;
+      case "ray_gun_zm":
+        level.rayguns++;
+        break;
 
-    case "raygun_mark2_zm":
-      level.rayguns_mark2++;
-      break;
+      case "raygun_mark2_zm":
+        level.rayguns_mark2++;
+        break;
     }
 
     while (self.zbarrier.weapon_string == "ray_gun_zm" || self.zbarrier.weapon_string == "raygun_mark2_zm") {
