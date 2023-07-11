@@ -29,4 +29,7 @@ Download [box_hits_tracker_compiled.gsc](https://github.com/SamRemix/box-hits-tr
 
 ### Notes
 
-If you want to play First Room with box on Farm, set the starting round to 0 or 5.
+If you want to play First Room with box on Farm, there are 2 possibilities:
+
+- Set the starting round to 0 or 5.
+- Download the source code from [v1.0](https://github.com/SamRemix/box-hits-tracker/releases/tag/v1.0) and copy the `.gsc` file into your game's script folder.
