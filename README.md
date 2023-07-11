@@ -26,3 +26,7 @@ Download [box_hits_tracker_compiled.gsc](https://github.com/SamRemix/box-hits-tr
 | :--------------- | :----------------- | :------ |
 | Box hits tracker | `box_hits` + `0 1` | Enabled |
 | Ray Guns average | `average` + `0 1`  | Enabled |
+
+### Notes
+
+If you want to play First Room with box on Farm, set the starting round to 0 or 5.
