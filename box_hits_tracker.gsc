@@ -3,17 +3,17 @@
 #include common_scripts\utility;
 
 init() {
-  thread onplayerconnect();
+  thread on_player_connect();
 }
 
-onplayerconnect() {
-  while (1) {
+on_player_connect() {
+  while (true) {
     level waittill("connecting", player);
-    player thread onplayerspawned();
+    player thread on_player_spawned();
   }
 }
 
-onplayerspawned() {
+on_player_spawned() {
   level endon("game_end");
   level endon("game_ended");
   self endon("disconnect");
@@ -23,22 +23,13 @@ onplayerspawned() {
   level.config["average"] = true;
 
   thread set_dvars();
-  level thread dvars_controller();
+  thread dvars_controller();
 
   for (;;) {
     self waittill("spawned_player");
-
     flag_wait("initial_blackscreen_passed");
 
-    if (is_survival_map()) {
-      // I don't know why but "wait" is needed otherwise it doesn't work on Nuketown
-      if (is_nuketown()) {
-        wait .05;
-      }
-
-      self thread box_hits_tracker_hud();
-      self thread rayguns_average_hud();
-    }
+    thread set_box_tracker();
 
     wait .05;
   }
@@ -64,7 +55,7 @@ set_dvars() {
 }
 
 dvars_controller() {
-  while (1) {
+  while (true) {
     // BOX HITS
     if (isDefined(level.box_hits_tracker)) {
       if (!getDvarInt("box_hits")) {
@@ -95,6 +86,14 @@ dvars_controller() {
 
 */
 
+has_magic() {
+  if (level.enable_magic) {
+    return true;
+  }
+
+  return false;
+}
+
 is_survival_map() {
   if (level.scr_zm_ui_gametype_group == "zsurvival" || level.script == "zm_nuked") {
     return true;
@@ -112,7 +111,7 @@ is_nuketown() {
 }
 
 get_box_hit() {
-  while (1) {
+  while (true) {
     self waittill("trigger");
 
     level.box_hits++;
@@ -121,13 +120,17 @@ get_box_hit() {
   }
 }
 
+current_box_weapon() {
+  return self.zbarrier.weapon_string;
+}
+
 check_rayguns() {
-  while (1) {
-    while (self.zbarrier.weapon_string != "ray_gun_zm" && self.zbarrier.weapon_string != "raygun_mark2_zm") {
+  while (true) {
+    while (self current_box_weapon() != "ray_gun_zm" && self current_box_weapon() != "raygun_mark2_zm") {
       wait .05;
     }
 
-    grabbed_weapon = self.zbarrier.weapon_string;
+    grabbed_weapon = self current_box_weapon();
 
     self waittill("user_grabbed_weapon");
 
@@ -141,10 +144,18 @@ check_rayguns() {
         break;
     }
 
-    while (self.zbarrier.weapon_string == "ray_gun_zm" || self.zbarrier.weapon_string == "raygun_mark2_zm") {
+    while (self current_box_weapon() == "ray_gun_zm" || self current_box_weapon() == "raygun_mark2_zm") {
       wait .05;
     }
   }
+}
+
+has_traded() {
+  if ((level.rayguns + level.rayguns_mark2) >= 2) {
+    return true;
+  }
+
+  return false;
 }
 
 weapon_average(weapon) {
@@ -157,6 +168,22 @@ weapon_average(weapon) {
 
 */
 
+set_box_tracker() {
+  if (!has_magic()) {
+    return;
+  }
+
+  if (is_survival_map()) {
+    // I don't know why but "wait" is needed otherwise it doesn't work on Nuketown
+    if (is_nuketown()) {
+      wait .05;
+    }
+
+    thread box_hits_tracker_hud();
+    thread rayguns_average_hud();
+  }
+}
+
 box_hits_tracker_hud() {
   level.box_hits_tracker = createServerFontString("big", 1.5);
   level.box_hits_tracker setPoint("TOPRIGHT", "TOPRIGHT", 58, 30);
@@ -167,7 +194,7 @@ box_hits_tracker_hud() {
     chest thread get_box_hit();
   }
 
-  while (1) {
+  while (true) {
     while (!level.box_hits) {
       wait .05;
     }
@@ -194,8 +221,8 @@ rayguns_average_hud() {
     chest thread check_rayguns();
   }
 
-  while (1) {
-    while ((level.rayguns + level.rayguns_mark2) < 2) {
+  while (true) {
+    while (!has_traded()) {
       wait .05;
     }
 
