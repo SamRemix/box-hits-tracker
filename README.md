@@ -2,8 +2,8 @@
 
 Box hits tracker & average calculator for Call of Duty: Black Ops II.
 
-> * *Enabled on **survival maps only** (Depot, Town, Farm & Nuketown).*
-> * *Disabled for **No Magic** games*.
+> * *Enabled on survival maps only (Depot, Town, Farm & Nuketown).*
+> * *Disabled for No Magic & First Room games*.
 
 ## Installation
 

@@ -94,6 +94,14 @@ has_magic() {
   return false;
 }
 
+is_firstroom_game() {
+  if (level.start_round == 10) {
+    return true;
+  }
+
+  return false;
+}
+
 is_survival_map() {
   if (level.scr_zm_ui_gametype_group == "zsurvival" || level.script == "zm_nuked") {
     return true;
@@ -169,7 +177,7 @@ weapon_average(weapon) {
 */
 
 set_box_tracker() {
-  if (!has_magic()) {
+  if (!has_magic() || is_firstroom_game()) {
     return;
   }
 
