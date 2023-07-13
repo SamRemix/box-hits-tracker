@@ -18,14 +18,16 @@ Download [box_hits_tracker_compiled.gsc](https://github.com/SamRemix/box-hits-tr
 ## Features
 
 - Box hits tracker *(appears on first hit)*
-- Ray Guns average *(appears after first trade)*
+- Ray Guns average *(appears after the first trade)*
+- Ray Gun Mark II ratio *(appears after the first trade)*
 
 ### Dvars
 
-| HUD element      | Dvar               | Default |
-| :--------------- | :----------------- | :------ |
-| Box hits tracker | `box_hits` + `0 1` | Enabled |
-| Ray Guns average | `average` + `0 1`  | Enabled |
+| HUD element           | Dvar               | Default  |
+| :-------------------- | :----------------- | :------- |
+| Box hits tracker      | `box_hits` + `0 1` | Enabled  |
+| Ray Guns average      | `average` + `0 1`  | Enabled  |
+| Ray Gun Mark II ratio | `ratio` + `0 1`    | Disabled |
 
 ### Notes
 
