@@ -42,3 +42,10 @@ If you want to play with box, there are 2 possibilities:
 - Download the source code from [v1.0](https://github.com/SamRemix/box-hits-tracker/releases/tag/v1.0) and copy the `.gsc` file into your game's script folder
 
 > if you choose to download v1.0, you will not have access to the *Ray Gun Mark II ratio*.
+
+## Contribution
+
+if you notice any english mistake on the documentation or if you have any suggestions to improve/optimize the script, please [open an issue](https://github.com/SamRemix/box-hits-tracker/issues/new) or contact me:
+
+* Discord: `samcpr`
+* Twitter: `@samcpr__`
