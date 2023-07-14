@@ -17,9 +17,12 @@ Download [box_hits_tracker_compiled.gsc](https://github.com/SamRemix/box-hits-tr
 
 ## Features
 
-- Box hits tracker *(appears on first hit)*
-- Ray Guns average *(appears after the first trade)*
-- Ray Gun Mark II ratio *(appears after the first trade)*
+- Box hits tracker
+- Ray Guns average
+- Ray Gun Mark II ratio
+
+> * *Box hits tracker* appears when you hit the box for the first time.
+> * *Ray Guns average* & *Ray Gun Mark II ratio* appear after the first trade.
 
 ### Dvars
 
@@ -29,9 +32,13 @@ Download [box_hits_tracker_compiled.gsc](https://github.com/SamRemix/box-hits-tr
 | Ray Guns average      | `average` + `0 1`  | Enabled  |
 | Ray Gun Mark II ratio | `ratio` + `0 1`    | Disabled |
 
-### Notes
+## Notes
 
-If you want to play First Room with box on Farm, there are 2 possibilities:
+### Farm - First Room
+
+If you want to play with box, there are 2 possibilities:
 
 - Set the starting round to 1 or 5.
-- Download the source code from [v1.0](https://github.com/SamRemix/box-hits-tracker/releases/tag/v1.0) and copy the `.gsc` file into your game's script folder.
+- Download the source code from [v1.0](https://github.com/SamRemix/box-hits-tracker/releases/tag/v1.0) and copy the `.gsc` file into your game's script folder
+
+> if you choose to download v1.0, you will not have access to the *Ray Gun Mark II ratio*.
