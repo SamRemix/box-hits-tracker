@@ -2,8 +2,7 @@
 
 Box hits tracker & average calculator for Call of Duty: Black Ops II.
 
-> * *Enabled on survival maps only (Depot, Town, Farm & Nuketown).*
-> * *Disabled for No Magic & First Room games.*
+> * Enabled on survival maps only *(Depot, Town, Farm & Nuketown)*.
 
 ## Installation
 
@@ -19,33 +18,21 @@ Download [box_hits_tracker_compiled.gsc](https://github.com/SamRemix/box-hits-tr
 
 - Box hits tracker
 - Ray Guns average
-- Ray Gun Mark II ratio
+- Ray Gun Mark II quotient
 
-> * *Box hits tracker* appears when you hit the box for the first time.
-> * *Ray Guns average* & *Ray Gun Mark II ratio* appear after the first trade.
+> * *Ray Guns average* & *Ray Gun Mark II quotient* appear after the first trade.
 
 ### Dvars
 
-| HUD element           | Dvar               | Default  |
-| :-------------------- | :----------------- | :------- |
-| Box hits tracker      | `box_hits` + `0 1` | Enabled  |
-| Ray Guns average      | `average` + `0 1`  | Enabled  |
-| Ray Gun Mark II ratio | `ratio` + `0 1`    | Disabled |
-
-## Notes
-
-### Farm - First Room
-
-If you want to play with box, there are 2 possibilities:
-
-- Set the starting round to 1 or 5.
-- Download the source code from [v1.0](https://github.com/SamRemix/box-hits-tracker/releases/tag/v1.0) and copy the `.gsc` file into your game's script folder
-
-> if you choose to download v1.0, you will not have access to the *Ray Gun Mark II ratio*.
+| HUD element              | Dvar               | Default |
+| :----------------------- | :----------------- | :------ |
+| Box hits tracker         | `box_hits` + `0 1` | Enabled |
+| Ray Guns average         | `average` + `0 1`  | Enabled |
+| Ray Gun Mark II quotient | `quotient` + `0 1` | Enabled |
 
 ## Contribution
 
-if you notice any english mistake on the documentation or if you have any suggestions to improve/optimize the script, please [open an issue](https://github.com/SamRemix/box-hits-tracker/issues/new) or contact me:
+If you notice any english mistake on the documentation or if you have any suggestions to improve/optimize the script, please [open an issue](https://github.com/SamRemix/box-hits-tracker/issues/new) or contact me:
 
 * Discord: `samcpr`
 * Twitter: `@samcpr__`
