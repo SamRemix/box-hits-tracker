@@ -19,6 +19,7 @@ on_player_spawned() {
   self endon("disconnect");
 
   level.config = array();
+  level.config["side"] = "right";
   level.config["box_hits"] = true;
   level.config["average"] = true;
   level.config["ratio"] = true;
@@ -51,9 +52,20 @@ init_dvar(dvar) {
 }
 
 set_dvars() {
+  setDvar("side", level.config["side"]);
   init_dvar("box_hits");
   init_dvar("average");
   init_dvar("ratio");
+}
+
+set_position(y) {
+  if (isDefined(self)) {
+    if (getDvar("side") == "right") {
+      self setPoint("TOPRIGHT", "TOPRIGHT", 58, y);
+    } else if (getDvar("side") == "left") {
+      self setPoint("TOPLEFT", "TOPLEFT", -58, y);
+    }
+  }
 }
 
 set_alpha(dvar, alpha) {
@@ -68,9 +80,17 @@ set_alpha(dvar, alpha) {
 
 dvars_controller() {
   while (true) {
+    level.box_hits_tracker set_position(30);
+    level.rayguns_average set_position(48);
+    level.mark2_average set_position(62);
+    level.ratio set_position(76);
+
     // BOX HITS
     while (!level.box_hits) {
-      level.box_hits_tracker.alpha = .4;
+      // I don't know why "set_position" must be duplicated here otherwise it doesn't work until I hit the box
+      level.box_hits_tracker set_position(30);
+
+      level.box_hits_tracker set_alpha("box_hits", .6);
       level.box_hits_tracker.label = &"No box hits";
 
       wait .05;
@@ -80,7 +100,7 @@ dvars_controller() {
 
     // RAYS AVERAGE
     while (level.total_rayguns == 1) {
-      level.rayguns_average set_alpha("average", .4);
+      level.rayguns_average set_alpha("average", .6);
       level.rayguns_average.label = &"Waiting for first trade to calculate average";
 
       wait .05;
@@ -90,7 +110,7 @@ dvars_controller() {
     level.mark2_average set_alpha("average", 1);
 
     // RATIO
-    level.ratio set_alpha("ratio", .4);
+    level.ratio set_alpha("ratio", .6);
 
     wait .05;
   }
@@ -168,13 +188,6 @@ average(raygun) {
   return round(level.box_hits / raygun);
 }
 
-create_element(size, positionX, positionY) {
-  hud_element = createFontString("big", size);
-  hud_element setPoint("TOPRIGHT", "TOPRIGHT", positionX, positionY);
-
-  return hud_element;
-}
-
 set_value(label, value) {
   self.label = label;
 
@@ -194,7 +207,7 @@ set_box_tracker() {
       return;
     }
 
-    // I don't know why but "wait" is needed otherwise it doesn't work on Nuketown
+    // I don't know why "wait" is needed otherwise it doesn't work on Nuketown
     while (is_nuketown()) {
       wait .05;
     }
@@ -206,7 +219,7 @@ set_box_tracker() {
 }
 
 box_hits_tracker_hud() {
-  level.box_hits_tracker = create_element(1.5, 58, 30);
+  level.box_hits_tracker = createFontString("big", 1.5);
 
   level.box_hits = 0;
 
@@ -226,8 +239,8 @@ box_hits_tracker_hud() {
 }
 
 rayguns_average_hud() {
-  level.rayguns_average = create_element(1.1, 58, 48);
-  level.mark2_average = create_element(1.1, 58, 60);
+  level.rayguns_average = createFontString("big", 1.1);
+  level.mark2_average = createFontString("big", 1.1);
 
   level.rayguns = 0;
   level.mark2 = 0;
@@ -251,7 +264,7 @@ rayguns_average_hud() {
 }
 
 mark2_ratio_hud() {
-  level.ratio = create_element(1.1, 58, 72);
+  level.ratio = createFontString("big", 1.1);
 
   while (true) {
     while (!has_traded() || !level.mark2) {

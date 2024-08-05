@@ -8,11 +8,19 @@ Box hits tracker & Ray Gun average calculator for Call of Duty: Black Ops II.
 
 ### Redacted
 
-Download [box_hits_tracker.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker.gsc) and put it in `Redacted_LAN\data\scripts` folder.
+Download [box_hits_tracker.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker.gsc) and put it in your scripts folder.
+
+```
+Redacted_LAN\data\scripts
+```
 
 ### Plutonium
 
-Download [box_hits_tracker-compiled.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker-compiled.gsc) and put it in `Plutonium\storage\t6\scripts\zm` folder.
+Download [box_hits_tracker-compiled.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker-compiled.gsc) and put it in your scripts folder.
+
+```
+Plutonium\storage\t6\scripts\zm
+```
 
 ## Features
 
@@ -23,8 +31,6 @@ Download [box_hits_tracker-compiled.gsc](https://github.com/SamRemix/box-hits-tr
 > * *Ray Guns average* appear after the first trade.
 > * *Ray Gun Mark II ratio* appear after the first trade if you got at least one Ray Gun Mark II.
 
-### Dvars
-
 | HUD element           |        Dvar        | Default |
 | :-------------------- | :----------------: | :------ |
 | Box hits tracker      | `box_hits` + `0 1` | Enabled |
@@ -32,7 +38,15 @@ Download [box_hits_tracker-compiled.gsc](https://github.com/SamRemix/box-hits-tr
 | Ray Gun Mark II ratio |  `ratio` + `0 1`   | Enabled |
 
 > For novices, here's an example of use:
-> * Open the console with `²`, type `average 0` to disable the feature and type `average 1` to re-enable it.
+> * Open the console with `~` or `²`, type `average 0` to disable the feature and type `average 1` to re-enable it.
+
+## Notes
+
+You have the possibility to change the side of the HUD:
+
+| HUD element      |         Dvar          | Default |
+| :--------------- | :-------------------: | :------ |
+| All HUD elements | `side` + `right left` | `right` |
 
 ## Contribution
 
