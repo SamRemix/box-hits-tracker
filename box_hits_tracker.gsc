@@ -21,7 +21,7 @@ on_player_spawned() {
   level.config = array();
   level.config["box_hits"] = true;
   level.config["average"] = true;
-  level.config["quotient"] = true;
+  level.config["ratio"] = true;
 
   thread set_dvars();
   thread dvars_controller();
@@ -53,7 +53,7 @@ init_dvar(dvar) {
 set_dvars() {
   init_dvar("box_hits");
   init_dvar("average");
-  init_dvar("quotient");
+  init_dvar("ratio");
 }
 
 set_alpha(dvar, alpha) {
@@ -79,10 +79,6 @@ dvars_controller() {
     level.box_hits_tracker set_alpha("box_hits", 1);
 
     // RAYS AVERAGE
-    while (!level.total_rayguns) {
-      wait .05;
-    }
-
     while (level.total_rayguns == 1) {
       level.rayguns_average set_alpha("average", .4);
       level.rayguns_average.label = &"Waiting for first trade to calculate average";
@@ -93,8 +89,8 @@ dvars_controller() {
     level.rayguns_average set_alpha("average", 1);
     level.mark2_average set_alpha("average", 1);
 
-    // QUOTIENT
-    level.quotient set_alpha("quotient", .4);
+    // RATIO
+    level.ratio set_alpha("ratio", .4);
 
     wait .05;
   }
@@ -152,15 +148,11 @@ check_rayguns() {
         break;
     }
 
-    level.total_rayguns = level.rayguns + level.mark2;
+    level.total_rayguns++;
   }
 }
 
 has_traded() {
-  while (!isDefined(level.total_rayguns)) {
-    wait .05;
-  }
-
   if (level.total_rayguns >= 2) {
     return true;
   }
@@ -209,7 +201,7 @@ set_box_tracker() {
 
     thread box_hits_tracker_hud();
     thread rayguns_average_hud();
-    thread mark2_quotient_hud();
+    thread mark2_ratio_hud();
   }
 }
 
@@ -240,6 +232,8 @@ rayguns_average_hud() {
   level.rayguns = 0;
   level.mark2 = 0;
 
+  level.total_rayguns = 0;
+
   foreach(chest in level.chests) {
     chest thread check_rayguns();
   }
@@ -256,15 +250,15 @@ rayguns_average_hud() {
   }
 }
 
-mark2_quotient_hud() {
-  level.quotient = create_element(1.1, 58, 72);
+mark2_ratio_hud() {
+  level.ratio = create_element(1.1, 58, 72);
 
   while (true) {
     while (!has_traded() || !level.mark2) {
       wait .05;
     }
 
-    level.quotient set_value(&"Ray Gun Mark II quotient: ", round(1 / (level.rayguns / level.mark2)));
+    level.ratio set_value(&"Ray Gun Mark II ratio: ", round(1 / (level.rayguns / level.mark2)));
 
     wait .05;
   }
