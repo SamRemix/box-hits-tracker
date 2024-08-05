@@ -14,8 +14,7 @@ on_player_connect() {
 }
 
 on_player_spawned() {
-  level endon("game_end");
-  level endon("game_ended");
+  level endon("end_game");
   self endon("disconnect");
 
   level.config = array();
@@ -60,11 +59,14 @@ set_dvars() {
 
 set_position(y) {
   if (isDefined(self)) {
-    if (getDvar("side") == "right") {
-      self setPoint("TOPRIGHT", "TOPRIGHT", 58, y);
-    } else if (getDvar("side") == "left") {
-      self setPoint("TOPLEFT", "TOPLEFT", -58, y);
+    POSITION = "TOP" + toUpper(getDvar("side"));
+    x = 58;
+
+    if (getDvar("side") == "left") {
+      x = x * -1;
     }
+
+    self setPoint(POSITION, POSITION, x, y);
   }
 }
 
@@ -83,7 +85,7 @@ dvars_controller() {
     level.box_hits_tracker set_position(30);
     level.rayguns_average set_position(48);
     level.mark2_average set_position(62);
-    level.ratio set_position(76);
+    level.mark2_ratio set_position(76);
 
     // BOX HITS
     while (!level.box_hits) {
@@ -110,7 +112,7 @@ dvars_controller() {
     level.mark2_average set_alpha("average", 1);
 
     // RATIO
-    level.ratio set_alpha("ratio", .6);
+    level.mark2_ratio set_alpha("ratio", .6);
 
     wait .05;
   }
@@ -188,12 +190,6 @@ average(raygun) {
   return round(level.box_hits / raygun);
 }
 
-set_value(label, value) {
-  self.label = label;
-
-  self setValue(value);
-}
-
 /*
 
   HUD
@@ -232,7 +228,8 @@ box_hits_tracker_hud() {
       wait .05;
     }
 
-    level.box_hits_tracker set_value(&"Box hits: ", level.box_hits);
+    level.box_hits_tracker.label = &"Box hits: ";
+    level.box_hits_tracker setValue(level.box_hits);
 
     wait .05;
   }
@@ -256,22 +253,26 @@ rayguns_average_hud() {
       wait .05;
     }
 
-    level.rayguns_average set_value(&"Ray Gun average: ", average(level.rayguns));
-    level.mark2_average set_value(&"Ray Gun Mark II average: ", average(level.mark2));
+    level.rayguns_average.label = &"Ray Gun average: ";
+    level.rayguns_average setValue(average(level.rayguns));
+
+    level.mark2_average.label = &"Ray Gun Mark II average: ";
+    level.mark2_average setValue(average(level.mark2));
 
     wait .05;
   }
 }
 
 mark2_ratio_hud() {
-  level.ratio = createFontString("big", 1.1);
+  level.mark2_ratio = createFontString("big", 1.1);
 
   while (true) {
     while (!has_traded() || !level.mark2) {
       wait .05;
     }
-
-    level.ratio set_value(&"Ray Gun Mark II ratio: ", round(1 / (level.rayguns / level.mark2)));
+    
+    level.mark2_ratio.label = &"Ray Gun Mark II ratio: ";
+    level.mark2_ratio setValue(round(1 / (level.rayguns / level.mark2)));
 
     wait .05;
   }
