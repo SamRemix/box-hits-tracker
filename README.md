@@ -6,9 +6,12 @@ Box hits tracker & Ray Gun average calculator for Call of Duty: Black Ops II.
 
 ## Installation
 
+Download the script and put it in your script folder.
+
 ### Redacted
 
-Download [box_hits_tracker.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker.gsc) and put it in your scripts folder.
+| [box_hits_tracker.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker.gsc) |
+| :-------------------------------------------------------------------------------------------------: |
 
 ```
 Redacted_LAN\data\scripts
@@ -16,7 +19,8 @@ Redacted_LAN\data\scripts
 
 ### Plutonium
 
-Download [box_hits_tracker-compiled.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker-compiled.gsc) and put it in your scripts folder.
+| [box_hits_tracker-compiled.gsc](https://github.com/SamRemix/box-hits-tracker/blob/main/box_hits_tracker-compiled.gsc) |
+| :-------------------------------------------------------------------------------------------------------------------: |
 
 ```
 Plutonium\storage\t6\scripts\zm
@@ -31,14 +35,13 @@ Plutonium\storage\t6\scripts\zm
 > * *Ray Guns average* appear after the first trade.
 > * *Ray Gun Mark II ratio* appear after the first trade if you got at least one Ray Gun Mark II.
 
-| HUD element           |        Dvar        | Default |
-| :-------------------- | :----------------: | :------ |
-| Box hits tracker      | `box_hits` + `0 1` | Enabled |
-| Ray Guns average      | `average` + `0 1`  | Enabled |
-| Ray Gun Mark II ratio |  `ratio` + `0 1`   | Enabled |
+| HUD element           |        Dvar        | Default  |
+| :-------------------- | :----------------: | :------: |
+| Box hits tracker      | `box_hits` + `0 1` | Enabled  |
+| Ray Guns average      | `average` + `0 1`  | Enabled  |
+| Ray Gun Mark II ratio |  `ratio` + `0 1`   | Disabled |
 
-> For novices, here's an example of use:
-> * Open the console with `~` or `²`, type `average 0` to disable the feature and type `average 1` to re-enable it.
+> HUD elements can be hidden or shown by changing the Dvar value. To do this, open the in-game console with `~` or `²` (on AZERTY keyboard) and enter the Dvar name followed by its value (you can also use the Redacted console or bootsrapper's console instead of the in-game console).
 
 ## Notes
 
@@ -50,7 +53,9 @@ You have the possibility to change the side of the HUD:
 
 ## Contribution
 
-If you notice any english mistake on the documentation or if you have any suggestions to improve or optimize the script, please [open an issue](https://github.com/SamRemix/box-hits-tracker/issues/new) or contact me:
+If you would like to contribute to the code, you can [fork this repository](https://github.com/SamRemix/box-hits-tracker/fork) to make changes and then [open a pull request](https://github.com/SamRemix/box-hits-tracker/pulls).
+
+Also, if you notice any issues while using the script, any english mistakes in the documentation or just have any suggestions to improve or optimize the script, please [open an issue](https://github.com/SamRemix/box-hits-tracker/issues) or contact me:
 
 * Discord: `samcpr`
 * Twitter: `@samcpr__`
