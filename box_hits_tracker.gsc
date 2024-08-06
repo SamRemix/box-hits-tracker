@@ -17,14 +17,13 @@ on_player_spawned() {
   level endon("end_game");
   self endon("disconnect");
 
-  level.config = array();
-  level.config["side"] = "right";
-  level.config["box_hits"] = true;
-  level.config["average"] = true;
-  level.config["ratio"] = true;
+  level.dvars = [];
+  level.dvars["side"] = "right";
+  level.dvars["box_hits"] = true;
+  level.dvars["average"] = true;
+  level.dvars["ratio"] = false;
 
   thread set_dvars();
-  thread dvars_controller();
 
   for (;;) {
     self waittill("spawned_player");
@@ -42,79 +41,19 @@ on_player_spawned() {
 
 */
 
-init_dvar(dvar) {
-  if (level.config[dvar]) {
-    setDvar(dvar, 1);
-  } else {
-    setDvar(dvar, 0);
-  }
-}
-
 set_dvars() {
-  setDvar("side", level.config["side"]);
-  init_dvar("box_hits");
-  init_dvar("average");
-  init_dvar("ratio");
-}
+  level endon("end_game");
 
-set_position(y) {
-  if (isDefined(self)) {
-    POSITION = "TOP" + toUpper(getDvar("side"));
-    x = 58;
+  foreach (key in getArrayKeys(level.dvars)) {
+    value = level.dvars[key];
 
-    if (getDvar("side") == "left") {
-      x = x * -1;
+    if (isString(value)) {
+      setDvar(key, value);
+    } else if (value) {
+      setDvar(key, 1);
+    } else {
+      setDvar(key, 0);
     }
-
-    self setPoint(POSITION, POSITION, x, y);
-  }
-}
-
-set_alpha(dvar, alpha) {
-  if (isDefined(self)) {
-    if (!getDvarInt(dvar)) {
-      self.alpha = 0;
-    } else if (getDvarInt(dvar) == 1) {
-      self.alpha = alpha;
-    }
-  }
-}
-
-dvars_controller() {
-  while (true) {
-    level.box_hits_tracker set_position(30);
-    level.rayguns_average set_position(48);
-    level.mark2_average set_position(62);
-    level.mark2_ratio set_position(76);
-
-    // BOX HITS
-    while (!level.box_hits) {
-      // I don't know why "set_position" must be duplicated here otherwise it doesn't work until I hit the box
-      level.box_hits_tracker set_position(30);
-
-      level.box_hits_tracker set_alpha("box_hits", .6);
-      level.box_hits_tracker.label = &"No box hits";
-
-      wait .05;
-    }
-
-    level.box_hits_tracker set_alpha("box_hits", 1);
-
-    // RAYS AVERAGE
-    while (level.total_rayguns == 1) {
-      level.rayguns_average set_alpha("average", .6);
-      level.rayguns_average.label = &"Waiting for first trade to calculate average";
-
-      wait .05;
-    }
-
-    level.rayguns_average set_alpha("average", 1);
-    level.mark2_average set_alpha("average", 1);
-
-    // RATIO
-    level.mark2_ratio set_alpha("ratio", .6);
-
-    wait .05;
   }
 }
 
@@ -190,6 +129,33 @@ average(raygun) {
   return round(level.box_hits / raygun);
 }
 
+set_hud_position(y) {
+  while (true) {
+    POSITION = "TOP" + toUpper(getDvar("side"));
+    x = 58;
+
+    if (getDvar("side") == "left") {
+      x = x * -1;
+    }
+
+    self setPoint(POSITION, POSITION, x, y);
+
+    wait .05;
+  }
+}
+
+set_hud_alpha(dvar, alpha) {
+  while (true) {
+    if (getDvarInt(dvar) == 1) {
+      self.alpha = alpha;
+    } else {
+      self.alpha = 0;
+    }
+
+    wait .05;
+  }
+}
+
 /*
 
   HUD
@@ -216,6 +182,10 @@ set_box_tracker() {
 
 box_hits_tracker_hud() {
   level.box_hits_tracker = createFontString("big", 1.5);
+  level.box_hits_tracker thread set_hud_position(30);
+  
+  level.box_hits_tracker thread set_hud_alpha("box_hits", .6);
+  level.box_hits_tracker.label = &"No box hits";
 
   level.box_hits = 0;
 
@@ -228,7 +198,9 @@ box_hits_tracker_hud() {
       wait .05;
     }
 
+    level.box_hits_tracker thread set_hud_alpha("box_hits", 1);
     level.box_hits_tracker.label = &"Box hits: ";
+
     level.box_hits_tracker setValue(level.box_hits);
 
     wait .05;
@@ -237,7 +209,10 @@ box_hits_tracker_hud() {
 
 rayguns_average_hud() {
   level.rayguns_average = createFontString("big", 1.1);
+  level.rayguns_average thread set_hud_position(48);
+
   level.mark2_average = createFontString("big", 1.1);
+  level.mark2_average thread set_hud_position(62);
 
   level.rayguns = 0;
   level.mark2 = 0;
@@ -250,13 +225,24 @@ rayguns_average_hud() {
 
   while (true) {
     while (!has_traded()) {
+      while (level.total_rayguns == 1) {
+        level.rayguns_average thread set_hud_alpha("average", .6);
+        level.rayguns_average.label = &"Waiting for first trade to calculate average";
+
+        wait .05;
+      }
+      
       wait .05;
     }
 
+    level.rayguns_average thread set_hud_alpha("average", 1);
     level.rayguns_average.label = &"Ray Gun average: ";
+
     level.rayguns_average setValue(average(level.rayguns));
 
+    level.mark2_average thread set_hud_alpha("average", 1);
     level.mark2_average.label = &"Ray Gun Mark II average: ";
+
     level.mark2_average setValue(average(level.mark2));
 
     wait .05;
@@ -265,13 +251,16 @@ rayguns_average_hud() {
 
 mark2_ratio_hud() {
   level.mark2_ratio = createFontString("big", 1.1);
+  level.mark2_ratio thread set_hud_position(76);
 
   while (true) {
     while (!has_traded() || !level.mark2) {
       wait .05;
     }
     
+    level.mark2_ratio thread set_hud_alpha("ratio", .6);
     level.mark2_ratio.label = &"Ray Gun Mark II ratio: ";
+
     level.mark2_ratio setValue(round(1 / (level.rayguns / level.mark2)));
 
     wait .05;
