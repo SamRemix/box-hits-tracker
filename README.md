@@ -6,7 +6,7 @@ Box hits tracker & Ray Gun average calculator for Call of Duty: Black Ops II.
 
 ## Installation
 
-Download the script and put it in your script folder.
+Download the script corresponding to your client and put it in your game script folder.
 
 ### Redacted
 
@@ -41,7 +41,7 @@ Plutonium\storage\t6\scripts\zm
 | Ray Guns average      | `average` + `0 1`  | Enabled  |
 | Ray Gun Mark II ratio |  `ratio` + `0 1`   | Disabled |
 
-> HUD elements can be hidden or shown by changing the Dvar value. To do this, open the in-game console with `~` or `²` (on AZERTY keyboard) and enter the Dvar name followed by its value (you can also use the Redacted console or bootsrapper's console instead of the in-game console).
+> HUD elements can be hidden or shown by changing the Dvar value. To do this, open the in-game console with `~` or `²` (on AZERTY keyboard) and enter the Dvar name followed by its value (you can also use the Redacted console or the Plutonium bootstrapper's console to enter Dvars).
 
 ## Notes
 
