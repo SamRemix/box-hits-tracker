@@ -145,14 +145,10 @@ set_hud_position(y) {
 }
 
 set_hud_alpha(dvar, alpha) {
-  while (true) {
-    if (getDvarInt(dvar) == 1) {
-      self.alpha = alpha;
-    } else {
-      self.alpha = 0;
-    }
-
-    wait .05;
+  if (getDvarInt(dvar) == 1) {
+    self.alpha = alpha;
+  } else {
+    self.alpha = 0;
   }
 }
 
@@ -183,9 +179,6 @@ set_box_tracker() {
 box_hits_tracker_hud() {
   level.box_hits_tracker = createFontString("big", 1.5);
   level.box_hits_tracker thread set_hud_position(30);
-  
-  level.box_hits_tracker thread set_hud_alpha("box_hits", .6);
-  level.box_hits_tracker.label = &"No box hits";
 
   level.box_hits = 0;
 
@@ -195,10 +188,13 @@ box_hits_tracker_hud() {
 
   while (true) {
     while (!level.box_hits) {
+      level.box_hits_tracker set_hud_alpha("box_hits", .6);
+      level.box_hits_tracker.label = &"No box hits";
+
       wait .05;
     }
 
-    level.box_hits_tracker thread set_hud_alpha("box_hits", 1);
+    level.box_hits_tracker set_hud_alpha("box_hits", 1);
     level.box_hits_tracker.label = &"Box hits: ";
 
     level.box_hits_tracker setValue(level.box_hits);
@@ -226,7 +222,7 @@ rayguns_average_hud() {
   while (true) {
     while (!has_traded()) {
       while (level.total_rayguns == 1) {
-        level.rayguns_average thread set_hud_alpha("average", .6);
+        level.rayguns_average set_hud_alpha("average", .6);
         level.rayguns_average.label = &"Waiting for first trade to calculate average";
 
         wait .05;
@@ -235,12 +231,12 @@ rayguns_average_hud() {
       wait .05;
     }
 
-    level.rayguns_average thread set_hud_alpha("average", 1);
+    level.rayguns_average set_hud_alpha("average", 1);
     level.rayguns_average.label = &"Ray Gun average: ";
 
     level.rayguns_average setValue(average(level.rayguns));
 
-    level.mark2_average thread set_hud_alpha("average", 1);
+    level.mark2_average set_hud_alpha("average", 1);
     level.mark2_average.label = &"Ray Gun Mark II average: ";
 
     level.mark2_average setValue(average(level.mark2));
@@ -258,7 +254,7 @@ mark2_ratio_hud() {
       wait .05;
     }
     
-    level.mark2_ratio thread set_hud_alpha("ratio", .6);
+    level.mark2_ratio set_hud_alpha("ratio", 1);
     level.mark2_ratio.label = &"Ray Gun Mark II ratio: ";
 
     level.mark2_ratio setValue(round(1 / (level.rayguns / level.mark2)));

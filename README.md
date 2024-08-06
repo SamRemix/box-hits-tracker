@@ -48,7 +48,7 @@ Plutonium\storage\t6\scripts\zm
 You have the possibility to change the side of the HUD:
 
 | HUD element      |         Dvar          | Default |
-| :--------------- | :-------------------: | :------ |
+| :--------------- | :-------------------: | :-----: |
 | All HUD elements | `side` + `right left` | `right` |
 
 ## Contribution
